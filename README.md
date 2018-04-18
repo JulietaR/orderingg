@@ -1,6 +1,10 @@
-# Ordering
+﻿# Ordering
 
 Aplicación utilizada en la cursada 2018 de Ingenieria de Software. UTN-FRLP
+
+Integrantes Grupo N° 
+- Julieta Rivero
+- Sol Bruschini
 
 ## Dependencias
 
