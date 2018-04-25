@@ -58,7 +58,7 @@
                         <div class="field">
                             <label class="label">ID</label>
                             <div class="control">
-                                <input id="product-id" class="input" readonly>
+                                <input id="product-id" class="input" disabled>
                             </div>
                         </div>
 
@@ -75,11 +75,18 @@
                                 <input id="product-price" class="input" type="number">
                             </div>
                         </div>
+
+                        <div class="field">
+                            <label class="label">Quantity</label>
+                            <div class="control">
+                                <input id="product-quantity" class="input" type="number">
+                            </div>
+                        </div>
                     </form>
                 </section>
                 <footer class="modal-card-foot">
                     <button id="save-button" class="button is-success">Guardar</button>
-                    <button id="edit-button" class="button is-warning">Editar</button>
+                    <button id="edit-button" class="button is-warning" disabled>Editar</button>
                     <button class="button" onclick="refs.modal.close()">Cancelar</button>
                 </footer>
             </div>
@@ -109,7 +116,7 @@
                         <td>{{ quantity }}</td>
                         <td>{{ totalPrice }}</td>
                         <td>
-                            <button class="button is-success is-rounded" onclick="refs.modal.open('edit', { id: '{{ id }}', name: '{{ name }}', price: '{{ price }}' })">
+                            <button class="button is-success is-rounded" onclick="refs.modal.open('edit', { id: '{{ id }}', name: '{{ name }}', price: '{{ price }}', quantity: '{{ quantity }}' })">
                                 <span class="icon"><i class="far fa-edit"></i></span>
                             </button>
                         </td>
