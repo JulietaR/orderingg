@@ -109,7 +109,7 @@
                         <td>{{ quantity }}</td>
                         <td>{{ totalPrice }}</td>
                         <td>
-                            <button class="button is-success is-rounded" onclick="refs.modal.open('edit')">
+                            <button class="button is-success is-rounded" onclick="refs.modal.open('edit', { id: '{{ id }}', name: '{{ name }}', price: '{{ price }}' })">
                                 <span class="icon"><i class="far fa-edit"></i></span>
                             </button>
                         </td>

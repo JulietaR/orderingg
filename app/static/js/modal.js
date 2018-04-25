@@ -3,7 +3,7 @@ const Modal = (function () {
     /**
      * Abre el modal
      **/
-    function open($modal, action) {
+    function open($modal, action, p) {
         const editTitle = document.getElementById('edit-title');
         const saveTitle = document.getElementById('save-title');
         const editButton = document.getElementById('edit-button');
@@ -30,6 +30,13 @@ const Modal = (function () {
             editButton.classList.remove('is-hidden');
             editTitle.classList.remove('is-hidden');
             editSection.classList.remove('is-hidden')
+
+            let productId = document.getElementById('product-id')
+                .value = p.id
+            let productName = document.getElementById('product-name')
+                .value = p.name
+            let productPrice = document.getElementById('product-price')
+                .value = p.price
         }  
     }
 
