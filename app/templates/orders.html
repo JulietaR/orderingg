@@ -16,7 +16,7 @@
 
         <div class="columns">
             <div class="column is-12">
-                <button class="button is-success is-rounded" onclick="refs.modal.open()">
+                <button class="button is-success is-rounded" onclick="refs.modal.open('add')">
                     <span class="icon"><i class="fas fa-plus"></i></span>
                     <span>Agregar</span>
                 </button>
@@ -31,10 +31,10 @@
             <div class="modal-card">
                 <header class="modal-card-head has-text-weight-bold">
                     <p id="save-title" class="modal-card-title">Agregar producto</p>
-                    <p id="edit-title" hidden class="modal-card-title">Editar producto</p>
+                    <p id="edit-title" class="modal-card-title">Editar producto</p>
                     <button class="delete" aria-label="close" onclick="refs.modal.close()"></button>
                 </header>
-                <section class="modal-card-body">
+                <section class="modal-card-body" id="save-section">
                     <form>
                         <div class="field">
                             <labe class="label">Seleccionar producto</labe>
@@ -53,9 +53,40 @@
                         </div>
                     </form>
                 </section>
+                <section class="modal-card-body" id="edit-section">
+                    <form>
+                        <div class="field">
+                            <label class="label">ID</label>
+                            <div class="control">
+                                <input id="product-id" class="input" disabled>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Nombre</label>
+                            <div class="control">
+                                <input id="product-name" class="input">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Precio</label>
+                            <div class="control">
+                                <input id="product-price" class="input" type="number">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Quantity</label>
+                            <div class="control">
+                                <input id="product-quantity" class="input" type="number">
+                            </div>
+                        </div>
+                    </form>
+                </section>
                 <footer class="modal-card-foot">
                     <button id="save-button" class="button is-success">Guardar</button>
-                    <button id="edit-button" class="button is-warning">Editar</button>
+                    <button id="edit-button" class="button is-warning" disabled>Editar</button>
                     <button class="button" onclick="refs.modal.close()">Cancelar</button>
                 </footer>
             </div>
@@ -84,6 +115,11 @@
                         <td>{{ price }}</td>
                         <td>{{ quantity }}</td>
                         <td>{{ totalPrice }}</td>
+                        <td>
+                            <button class="button is-success is-rounded" onclick="refs.modal.open('edit', { id: '{{ id }}', name: '{{ name }}', price: '{{ price }}', quantity: '{{ quantity }}' })">
+                                <span class="icon"><i class="far fa-edit"></i></span>
+                            </button>
+                        </td>
                     </tr>
                 {{/ each }}
             </tbody>

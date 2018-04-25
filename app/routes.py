@@ -107,7 +107,11 @@ def order_product_detail(pk_order, pk_product):
         if (new_quantity):
             order_product.quantity = new_quantity
         if (new_product):
-            order_product.product = Product.query.get(new_product)
+            #order_product.product = Product.query.get(new_product)
+            
+            order_product.product.name = new_product['name']
+            order_product.product.price = new_product['price']
+
             order = Order.query.get(pk_order)
             order.products.append(order_product)
         db.session.commit()
