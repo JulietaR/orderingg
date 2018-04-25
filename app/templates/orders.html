@@ -111,13 +111,18 @@
                 {{# each products }}
                     <tr>
                         <td>{{ id }}</td>
-                        <td>{{ description }}</td>
+                        <td>{{ name }}</td>
                         <td>{{ price }}</td>
                         <td>{{ quantity }}</td>
                         <td>{{ totalPrice }}</td>
                         <td>
                             <button class="button is-success is-rounded" onclick="refs.modal.open('edit', { id: '{{ id }}', name: '{{ name }}', price: '{{ price }}', quantity: '{{ quantity }}' })">
                                 <span class="icon"><i class="far fa-edit"></i></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="button is-danger is-rounded" onclick="refs.onDeleteProduct({ id: '{{ id }}', name: '{{ name }}', price: '{{ price }}' })">
+                                <span class="icon"><i class="fas fa-times"></i></span>
                             </button>
                         </td>
                     </tr>
