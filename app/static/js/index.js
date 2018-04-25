@@ -95,6 +95,20 @@
         });
     }
 
+    refs.onDeleteProduct = function(product) {
+
+        API.deleteProduct(1, product.id, product)
+            .then(function (r) {
+                if (r.error) {
+                    console.error(r.error);
+                } else {
+                    API.getOrder().then(function (data) {
+                        refs.table.update(data);
+                    });
+                }
+            });
+    }
+
     init();
     window.refs = refs;
 })()

@@ -120,6 +120,11 @@
                                 <span class="icon"><i class="far fa-edit"></i></span>
                             </button>
                         </td>
+                        <td>
+                            <button class="button is-danger is-rounded" onclick="refs.onDeleteProduct({ id: '{{ id }}', name: '{{ name }}', price: '{{ price }}' })">
+                                <span class="icon"><i class="fas fa-times"></i></span>
+                            </button>
+                        </td>
                     </tr>
                 {{/ each }}
             </tbody>
