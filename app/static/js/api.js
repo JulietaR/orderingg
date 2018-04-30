@@ -39,7 +39,6 @@ const API = (function () {
      */
     function editProduct(orderId, productId, quantity, product) {
         const data = JSON.stringify({ quantity: quantity, product: product })
-
         return fetch(`/order/${ orderId }/product/${ productId }`,
             {
                 method: 'PUT',

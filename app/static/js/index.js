@@ -46,14 +46,17 @@
             .then(function (r) {
                 if (r.error) {
                     console.error(r.error);
-                } else {
-                    API.getOrder().then(function (data) {
-                        refs.table.update(data);
-                    });
+                    document.getElementById("noti").style.display = 'block';
+                } 
+                        else {
+                            document.getElementById("noti").style.display = 'none';
+                            API.getOrder().then(function (data) {
+                                refs.table.update(data);
+                            });
 
-                    refs.modal.close();
-                }
-            });
+                        refs.modal.close();
+                    }
+                 });
     }
 
     /**
