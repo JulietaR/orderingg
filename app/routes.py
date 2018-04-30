@@ -84,7 +84,7 @@ def addProductToOrder(pk):
 
     return jsonify(order.serialize), 201
 
-@app.route("/order/<pk_order>/product/<pk_product>", methods=['GET', 'PUT'])
+@app.route("/order/<pk_order>/product/<pk_product>", methods=['GET', 'PUT', 'DELETE'])
 def order_product_detail(pk_order, pk_product):
     """
     Obtiene un producto de una orden y modifica un producto de una orden
@@ -100,6 +100,11 @@ def order_product_detail(pk_order, pk_product):
 
     if request.method == 'GET':
         return jsonify(order_product.serialize)
+
+    if request.method == 'DELETE':
+        db.session.delete(order_product)
+        db.session.commit()
+        return jsonify({ 'response': 'deleted' })
     else:
         new_quantity = request.get_json()['quantity']
         new_product = request.get_json()['product']
@@ -107,7 +112,11 @@ def order_product_detail(pk_order, pk_product):
         if (new_quantity):
             order_product.quantity = new_quantity
         if (new_product):
-            order_product.product = Product.query.get(new_product)
+            #order_product.product = Product.query.get(new_product)
+            
+            order_product.product.name = new_product['name']
+            order_product.product.price = new_product['price']
+
             order = Order.query.get(pk_order)
             order.products.append(order_product)
         db.session.commit()

@@ -1,18 +1,45 @@
 const Modal = (function () {
+    const editButton = document.getElementById('edit-button');
 
     /**
      * Abre el modal
      **/
-    function open($modal) {
+    function open($modal, section, p) {
         const editTitle = document.getElementById('edit-title');
         const saveTitle = document.getElementById('save-title');
-        const editButton = document.getElementById('edit-button');
         const saveButton = document.getElementById('save-button');
+
+        const saveSection = document.getElementById('save-section')
+        const editSection = document.getElementById('edit-section')
 
         $modal.classList.add('is-active');
 
-        editButton.classList.add('is-hidden');
-        editTitle.classList.add('is-hidden');
+        if (section === 'add') {
+            editButton.classList.add('is-hidden');
+            editTitle.classList.add('is-hidden');
+            editSection.classList.add('is-hidden')
+
+            saveButton.classList.remove('is-hidden');
+            saveTitle.classList.remove('is-hidden');
+            saveSection.classList.remove('is-hidden')
+        } else if (section === 'edit') {
+            saveButton.classList.add('is-hidden');
+            saveTitle.classList.add('is-hidden');
+            saveSection.classList.add('is-hidden')
+
+            editButton.classList.remove('is-hidden');
+            editTitle.classList.remove('is-hidden');
+            editSection.classList.remove('is-hidden')
+
+            let productId = document.getElementById('product-id')
+                .value = p.id
+            let productName = document.getElementById('product-name')
+                .value = p.name
+            let productPrice = document.getElementById('product-price')
+                .value = p.price
+            let productQuantity = document.getElementById('product-quantity')
+                .value = p.quantity
+        }  
     }
 
     /**
@@ -20,6 +47,10 @@ const Modal = (function () {
      **/
     function close($modal) {
         $modal.classList.remove('is-active');
+
+        if (!editButton.disabled) {
+            editButton.disabled = true
+        }
     }
 
     /**
@@ -43,6 +74,19 @@ const Modal = (function () {
 
         $modal.querySelector('#save-button')
             .addEventListener('click', config.onAddProduct);
+
+
+        function enableEditButton() {
+            editButton.disabled = false
+        }
+
+        $modal.querySelector('#edit-section')
+            .addEventListener('input', enableEditButton);
+
+        editButton.addEventListener('click', function() {
+                let pid = document.getElementById('product-id').value
+                config.onEditProduct(pid)
+            });
 
         return {
             close: close.bind(null, $modal),

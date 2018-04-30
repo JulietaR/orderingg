@@ -59,6 +59,25 @@
                  });
     }
 
+    function onEditProduct(pid) {
+        let name = document.querySelector('#product-name').value
+        let price = document.querySelector('#product-price').value
+        let quantity = document.querySelector('#product-quantity').value
+
+        API.editProduct(1, pid, quantity, { id: pid, name: name, price: price })
+            .then(function (r) {
+                if (r.error) {
+                    console.error(r.error);
+                } else {
+                    API.getOrder().then(function (data) {
+                        refs.table.update(data);
+                    });
+
+                    refs.modal.close();
+                }
+            });
+    }
+
     /**
      * Inicializa la aplicacion
      **/
@@ -68,7 +87,8 @@
             products: state.products,
             onProductSelect: onProductSelect,
             onChangeQunatity: onChangeQunatity,
-            onAddProduct: onAddProduct
+            onAddProduct: onAddProduct,
+            onEditProduct: onEditProduct
         });
 
         // Inicializamos la tabla
@@ -76,6 +96,20 @@
             el: '#orders',
             data: state.order
         });
+    }
+
+    refs.onDeleteProduct = function(product) {
+
+        API.deleteProduct(1, product.id, product)
+            .then(function (r) {
+                if (r.error) {
+                    console.error(r.error);
+                } else {
+                    API.getOrder().then(function (data) {
+                        refs.table.update(data);
+                    });
+                }
+            });
     }
 
     init();
