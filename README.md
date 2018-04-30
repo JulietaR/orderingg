@@ -2,9 +2,10 @@
 
 Aplicación utilizada en la cursada 2018 de Ingenieria de Software. UTN-FRLP
 
-Integrantes Grupo N° 
+Integrantes Grupo N°11
 - Julieta Rivero
 - Sol Bruschini
+- Martin Salvo
 
 ## Dependencias
 
