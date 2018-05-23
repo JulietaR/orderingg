@@ -48,7 +48,8 @@
                         <div class="field">
                             <label class="label">Cantidad</label>
                             <div class="control">
-                                <input id="quantity" class="input" type="number" min="1">
+                                <input id="quantity" class="input" type="number" min="1" value="1" required>
+                                <p class="help is-danger is-hidden">Por favor ingrese un numero mayor a 0</p>
                             </div>
                         </div>
 
@@ -89,8 +90,8 @@
                     </form>
                 </section>
                 <footer class="modal-card-foot">
-                    <button id="save-button" class="button is-success">Guardar</button>
-                    <button id="edit-button" class="button is-warning" disabled>Editar</button>
+                    <button id="save-button" class="button is-success" disabled="disabled">Guardar</button>
+                    <button id="edit-button" class="button is-warning">Editar</button>
                     <button class="button" onclick="refs.modal.close()">Cancelar</button>
                 </footer>
             </div>
@@ -104,11 +105,12 @@
         <table class="table is-fullwidth is-hoverable is-striped">
             <thead>
                 <tr>
-                    <td>ID</td>
-                    <td>Nombre</td>
-                    <td>Precio unitario</td>
-                    <td>Cantidad</td>
-                    <td>Precio total</td>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad</th>
+                    <th>Precio total</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -120,13 +122,12 @@
                         <td>{{ quantity }}</td>
                         <td>{{ totalPrice }}</td>
                         <td>
-                            <button class="button is-success is-rounded" onclick="refs.modal.open('edit', { id: '{{ id }}', name: '{{ name }}', price: '{{ price }}', quantity: '{{ quantity }}' })">
-                                <span class="icon"><i class="far fa-edit"></i></span>
+                            <button class="button is-small is-warning" onClick="refs.modal.openEdit({ id: {{ id }}, quantity: {{ quantity }} })">
+                                <i class="fa fa-edit"></i>
                             </button>
-                        </td>
-                        <td>
-                            <button class="button is-danger is-rounded" onclick="refs.onDeleteProduct({ id: '{{ id }}', name: '{{ name }}', price: '{{ price }}' })">
-                                <span class="icon"><i class="fas fa-times"></i></span>
+
+                            <button class="button is-small is-danger" onClick="refs.global.onDeleteProduct({{ id }})">
+                                <i class="fa fa-trash"></i>
                             </button>
                         </td>
                     </tr>
@@ -139,6 +140,7 @@
                     <td></td>
                     <td>Total</td>
                     <td>{{ orderPrice }}</td>
+                    <td></td>
                 </tr>
             </tfoot>
         </table>
@@ -147,13 +149,15 @@
     <!-- Template handlebars del select de productos -->
     <script id="select-template" type="text/x-handlebars-template">
         <div class="select">
-            <select id="select-prod">
+            <select id="select-prod" required>
                 <option disabled selected value="">Seleccione un producto</option>
                 {{# each products }}
                     <option value="{{ id }}">{{ name }}</option>
                 {{/ each }}
             </select>
         </div>
+
+        <p class="help is-danger is-hidden"></p>
     </script>
     {% endraw %}
 </body>
