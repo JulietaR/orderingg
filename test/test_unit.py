@@ -78,6 +78,16 @@ class OrderingTestCase(TestCase):
 
         self.assertEqual(result_GET.status, "200 OK", "Falló el GET")
 
+    def test_GET_method_in_order(self):
+        order = Order(id = 2)
+
+        db.session.add(order)
+        db.session.commit()
+
+        result_GET = self.client.get('/order/2', content_type='aplication/json')
+
+        self.assertEqual(result_GET.status, "200 OK", "Falló el GET")
+
 
 if __name__ == '__main__':
     unittest.main()
