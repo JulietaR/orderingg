@@ -88,6 +88,21 @@ class OrderingTestCase(TestCase):
 
         self.assertEqual(result_GET.status, "200 OK", "Falló el GET")
 
+    def test_DELETE_method_in_orderProduct(self):
+        prod = Product(id = 6, name = 'Escritorio', price = 15000)
+        order = Order(id = 3)
+        op = OrderProduct(order_id = 3, product_id = 6, product = prod, quantity = 1)
+
+        db.session.add(prod)
+        db.session.add(order)
+        db.session.add(op)
+        db.session.commit()
+
+        result_DELETE = self.client.delete('/order/3/product/6', content_type='aplication/json')
+
+        self.assertEqual(result_DELETE.status, "200 OK", "Falló el GET")    
+        self.assertNotIn(op,db.session,"No se eliminó el producto de la orden")
+
 
 if __name__ == '__main__':
     unittest.main()
