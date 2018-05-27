@@ -64,6 +64,20 @@ class OrderingTestCase(TestCase):
 
         self.assertNotIn(op,db.session,"Se crea instancia de OrderProduct con producto de cantidad negativa") 
 
+    def test_GET_method_in_orderProduct(self):
+        prod = Product(id = 5, name = 'sillon', price = 8000)
+        order = Order(id = 1)
+        op = OrderProduct(order_id = 1, product_id = 5, product = prod, quantity = 1)
+
+        db.session.add(prod)
+        db.session.add(order)
+        db.session.add(op)
+        db.session.commit()
+
+        result_GET = self.client.get('/order/1/product/5', content_type='aplication/json')
+
+        self.assertEqual(result_GET.status, "200 OK", "Falló el GET")
+
 
 if __name__ == '__main__':
     unittest.main()
