@@ -59,6 +59,30 @@ class Ordering(unittest.TestCase):
         
         self.assertEqual(send, "FALSE", "Se puede ingresar productos negativos a la orden")
 
+    def test_existe_notificacion(self):
+        prod = Product(name = 'Silla', price = 500)
+        order = Order()
+        op = OrderProduct(product = prod, quantity = 1)
+
+        db.session.add(prod)
+        db.session.add(order)
+        db.session.add(op)
+        db.session.commit()
+
+
+        driver = self.driver
+        driver.get(self.baseURL)
+        
+        agregar = driver.find_element_by_xpath("/html/body/main/div[1]/div/button").click()
+        producto = driver.find_element_by_id("select-prod")
+        producto.select_by_visible_text("Silla")
+        cantidad = driver.find_element_by_id("quantity")
+        cantidad.SendKeys('1')
+        send = driver.find_element_by_id("save-button").click()
+        noti = driver.find_element_by_id("noti").is_displayed()
+        
+        self.assertEqual(noti, "TRUE", "No aparece la notificación")
+
     def tearDown(self):
         self.driver.get('http://localhost:5000/shutdown')
 
