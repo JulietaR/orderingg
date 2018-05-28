@@ -83,6 +83,28 @@ class Ordering(unittest.TestCase):
         
         self.assertEqual(noti, "TRUE", "No aparece la notificación")
 
+    def test_modal(self):
+        o = Order(id=1)
+        db.session.add(o)
+        p = Product(id=1, name='libro', price=10)
+        db.session.add(p)
+        op = OrderProduct(order_id=1, product_id=1, product=p, quantity=1)
+        db.session.add(op)
+        db.session.commit()
+
+        driver = self.driver
+        driver.get(self.baseURL)
+
+        editButton1 = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[6]/button[1]')
+        editButton1.click()
+        
+        name = driver.find_element_by_id("product-name").text
+        self.assertFalse(name=="", "Product name should not be empty");
+        price = driver.find_element_by_id("product-price").text
+        self.assertFalse(price=="", "Product price should not be empty");
+        quantity = driver.find_element_by_id("product-quantity").text
+        self.assertFalse(quantity=="", "Product quantity should not be empty");
+
     def tearDown(self):
         self.driver.get('http://localhost:5000/shutdown')
 

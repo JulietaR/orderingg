@@ -103,6 +103,63 @@ class OrderingTestCase(TestCase):
         self.assertEqual(result_DELETE.status, "200 OK", "Falló el GET")    
         self.assertNotIn(op,db.session,"No se eliminó el producto de la orden")
 
+    def test_modificar_producto(self):
+        pk_order = 1
+        pk_product = 1
+
+        data = {
+            'quantity': 5,
+            'product': {
+                'id': 1,
+                'name': 'Tenedor',
+                'price': 50
+            }
+        }
+
+        db.session.add(Order(id=pk_order))
+        np = Product(id=data['product']['id'], name=data['product']['name'], price=data['product']['price'])
+        db.session.add(np)
+        db.session.add(OrderProduct(order_id= pk_order, product_id= pk_product, quantity= data['quantity'], product= np))
+        db.session.commit()
+
+        self.client.put('order/' + str(pk_order) + '/product/' + str(pk_product), data=json.dumps(data), content_type='application/json')
+        
+        ordprod = pk_order, pk_product
+        p = OrderProduct.query.get(ordprod)
+        self.assertEqual(p.quantity, data['quantity'], 'Quantity should be equal')
+
+    def test_totalPrice(self):
+        pk_order = 1
+
+        o = Order(id=pk_order)
+        db.session.add(o)
+        p1 = Product(id=1, name="tenedor", price="5")
+        p2 = Product(id=2, name="notebook", price="100")
+        q1 = 2
+        q2 = 1
+        db.session.add(p1)
+        db.session.add(p2)
+        db.session.add(OrderProduct(order_id= pk_order, product_id= 1, quantity= q1, product= p1))
+        db.session.add(OrderProduct(order_id= pk_order, product_id= 2, quantity= q2, product= p2))
+        db.session.commit()
+
+        total = p1.price*q1 + p2.price*q2
+
+        self.assertEqual(total, o.orderPrice, "Price should be equal")
+
+    def test_crear_producto_string_no_vacio(self):
+        data = {
+            'name': '',
+            'price': 10
+        }
+
+        resp = self.client.post('/product', data=json.dumps(data), content_type='application/json')
+
+        self.assert200(resp, "Falló el POST")
+        p = Product.query.all()[0]
+
+        self.assertFalse(p.name=="", "El nombre no debe estar vacío")
+
 
 if __name__ == '__main__':
     unittest.main()
