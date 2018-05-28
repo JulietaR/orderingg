@@ -46,6 +46,19 @@ class Ordering(unittest.TestCase):
         modal = driver.find_element_by_id('modal')
         assert modal.is_displayed(), "El modal no esta visible"
 
+    def test_productos_cantidad_negativa(self):
+        driver = self.driver
+        driver.get(self.baseURL)
+        
+        agregar = find_element_by_xpath("/html/body/main/div[1]/div/button").click()
+        producto = driver.find_element_by_id("select-prod")
+        producto.select_by_visible_text("Silla")
+        cantidad = driver.find_element_by_id("quantity")
+        cantidad.SendKeys('-1')
+        send = driver.find_element_by_id("save-button").is_enabled()
+        
+        self.assertEqual(send, "FALSE", "Se puede ingresar productos negativos a la orden")
+
     def tearDown(self):
         self.driver.get('http://localhost:5000/shutdown')
 
