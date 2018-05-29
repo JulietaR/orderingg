@@ -60,29 +60,28 @@ class Ordering(unittest.TestCase):
         self.assertEqual(send, "FALSE", "Se puede ingresar productos negativos a la orden")
 
     def test_existe_notificacion(self):
-        prod = Product(name = 'Silla', price = 500)
-        order = Order()
-        op = OrderProduct(product = prod, quantity = 1)
+        prod = Product(id = 1, name = 'Silla', price = 500)
+        order = Order(id = 1)
+        op = OrderProduct(order_id = 1, product_id= 1, product = prod, quantity = 1)
 
         db.session.add(prod)
         db.session.add(order)
         db.session.add(op)
         db.session.commit()
 
-
         driver = self.driver
         driver.get(self.baseURL)
-        
-        agregar = driver.find_element_by_xpath("/html/body/main/div[1]/div/button").click()
-        producto = driver.find_element_by_id("select-prod")
-        producto.select_by_visible_text("Silla")
-        cantidad = driver.find_element_by_id("quantity")
-        cantidad.SendKeys('1')
-        send = driver.find_element_by_id("save-button").click()
-        noti = driver.find_element_by_id("noti").is_displayed()
-        
-        self.assertEqual(noti, "TRUE", "No aparece la notificación")
 
+        agregar = driver.find_element_by_xpath("/html/body/main/div[1]/div/button").click()
+        producto = driver.find_element_by_id('select-prod')
+        producto.send_keys("Silla")
+        cantidad = driver.find_element_by_id("quantity")
+        cantidad.clear()
+        cantidad.send_keys('1')
+        send = driver.find_element_by_id("save-button").click()
+        noti = driver.find_element_by_class_name('help').is_displayed()
+        self.assertTrue(noti, "No aparece la notificación")
+        
     def test_modal(self):
         o = Order(id=1)
         db.session.add(o)
