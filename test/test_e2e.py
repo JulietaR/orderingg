@@ -7,6 +7,7 @@ from selenium import webdriver
 
 from app import create_app, db
 from app.models import Product, Order, OrderProduct
+from selenium.webdriver.support.ui import Select
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -47,17 +48,26 @@ class Ordering(unittest.TestCase):
         assert modal.is_displayed(), "El modal no esta visible"
 
     def test_productos_cantidad_negativa(self):
+        o = Order(id=1)
+        db.session.add(o)
+        p = Product(id=1, name = 'Silla', price = 500)
+        db.session.add(p)
+        db.session.commit()
+
         driver = self.driver
         driver.get(self.baseURL)
         
-        agregar = find_element_by_xpath("/html/body/main/div[1]/div/button").click()
-        producto = driver.find_element_by_id("select-prod")
-        producto.select_by_visible_text("Silla")
-        cantidad = driver.find_element_by_id("quantity")
-        cantidad.SendKeys('-1')
-        send = driver.find_element_by_id("save-button").is_enabled()
+        driver.find_element_by_xpath("/html/body/main/div[1]/div/button").click()
         
-        self.assertEqual(send, "FALSE", "Se puede ingresar productos negativos a la orden")
+        cantidad = driver.find_element_by_id("quantity")
+        cantidad.clear()
+        cantidad.send_keys('-1')
+
+        select = Select(driver.find_element_by_id('select-prod'))
+        select.select_by_visible_text('Silla')
+
+        send = driver.find_element_by_id("save-button").is_enabled()
+        self.assertEqual(send, False, "Se puede ingresar productos negativos a la orden")
 
     def test_existe_notificacion(self):
         prod = Product(id = 1, name = 'Silla', price = 500)
@@ -85,7 +95,7 @@ class Ordering(unittest.TestCase):
     def test_modal(self):
         o = Order(id=1)
         db.session.add(o)
-        p = Product(id=1, name='libro', price=10)
+        p = Product(id=1, name='Libro', price=10)
         db.session.add(p)
         op = OrderProduct(order_id=1, product_id=1, product=p, quantity=1)
         db.session.add(op)
@@ -97,12 +107,21 @@ class Ordering(unittest.TestCase):
         editButton1 = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[6]/button[1]')
         editButton1.click()
         
-        name = driver.find_element_by_id("product-name").text
-        self.assertFalse(name=="", "Product name should not be empty");
-        price = driver.find_element_by_id("product-price").text
-        self.assertFalse(price=="", "Product price should not be empty");
-        quantity = driver.find_element_by_id("product-quantity").text
-        self.assertFalse(quantity=="", "Product quantity should not be empty");
+        nameInput = driver.find_element_by_id("product-name")
+        priceInput = driver.find_element_by_id("product-price")
+        quantityInput = driver.find_element_by_id("product-quantity")
+
+        nameInput.send_keys('Silla')
+        priceInput.send_keys('20')
+        quantityInput.send_keys('2')
+
+        name = nameInput.get_attribute('value')
+        price = priceInput.get_attribute('value')
+        quantity = quantityInput.get_attribute('value')
+        print(name + " " + price + " " + quantity)
+        self.assertFalse(name=="", "Product name should not be empty")
+        self.assertFalse(price=="", "Product price should not be empty")
+        self.assertFalse(quantity=="", "Product quantity should not be empty")
 
     def tearDown(self):
         self.driver.get('http://localhost:5000/shutdown')
