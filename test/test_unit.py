@@ -87,8 +87,10 @@ class OrderingTestCase(TestCase):
         db.session.commit()
 
         result_GET = self.client.get('/order/2', content_type='aplication/json')
+        data = json.loads(result_GET.data)
 
         self.assertEqual(result_GET.status, "200 OK", "Falló el GET")
+        self.assertEqual(data['id'], order.id, "Falló el GET")        
 
     def test_DELETE_method_in_orderProduct(self):
         prod = Product(id = 6, name = 'Escritorio', price = 15000)
