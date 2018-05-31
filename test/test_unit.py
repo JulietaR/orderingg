@@ -103,9 +103,11 @@ class OrderingTestCase(TestCase):
         db.session.commit()
 
         result_DELETE = self.client.delete('/order/3/product/6', content_type='aplication/json')
+        result_GET = self.client.get('/order/3', content_type='aplication/json')
+        data = json.loads(result_GET.data)
 
-        self.assertEqual(result_DELETE.status, "200 OK", "Falló el GET")    
-        self.assertNotIn(op,db.session,"No se eliminó el producto de la orden")
+        self.assertEqual(result_DELETE.status, "200 OK", "Falló el DELETE")    
+        self.assertEqual(data['products'], [], "Falló el DELETE")        
 
     def test_modificar_producto(self):
         pk_order = 1
