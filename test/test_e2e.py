@@ -8,6 +8,7 @@ from selenium import webdriver
 from app import create_app, db
 from app.models import Product, Order, OrderProduct
 from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -118,10 +119,38 @@ class Ordering(unittest.TestCase):
         name = nameInput.get_attribute('value')
         price = priceInput.get_attribute('value')
         quantity = quantityInput.get_attribute('value')
-        print(name + " " + price + " " + quantity)
+
         self.assertFalse(name=="", "Product name should not be empty")
         self.assertFalse(price=="", "Product price should not be empty")
         self.assertFalse(quantity=="", "Product quantity should not be empty")
+
+    def test_eliminar_fila_correcta(self):
+        o = Order(id=1)
+        db.session.add(o)
+        p = Product(id=1, name='Libro', price=10)
+        db.session.add(p)
+        op = OrderProduct(order_id=1, product_id=1, product=p, quantity=1)
+        db.session.add(op)
+        db.session.commit()
+
+        driver = self.driver
+        driver.get(self.baseURL)
+
+        deleteButton = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[6]/button[2]')
+        deleteButton.click()
+
+        time.sleep(3)
+
+        deleted = False
+        try:
+            el = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[1]')
+        except NoSuchElementException:
+            deleted = True
+
+        order_product = db.session.query(OrderProduct).all()
+
+        self.assertTrue(deleted==True, "No se eliminó el producto de la tabla")
+        self.assertFalse(order_product, "No se eliminó el producto de la db")
 
     def tearDown(self):
         self.driver.get('http://localhost:5000/shutdown')

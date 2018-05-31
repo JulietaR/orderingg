@@ -52,7 +52,7 @@ class OrderingTestCase(TestCase):
         # Verifica que en la lista de productos haya un solo producto
         self.assertEqual(len(p), 1, "No hay productos")
 
-    def test_crear_producto_cantidad_no_negativa_(self):
+    def test_crear_producto_cantidad_no_negativa(self):
         prod = Product(id = 5, name = 'sillon', price = 8000)
         order = Order(id = 1)
         op = OrderProduct(order_id = 1, product_id = 5, product = prod, quantity = -2)    
@@ -62,7 +62,9 @@ class OrderingTestCase(TestCase):
         db.session.add(op)
         db.session.commit()
 
-        self.assertNotIn(op,db.session,"Se crea instancia de OrderProduct con producto de cantidad negativa") 
+        ops = db.session.query(OrderProduct).all()
+
+        self.assertNotIn(op, ops, "Se crea instancia de OrderProduct con producto de cantidad negativa") 
 
     def test_GET_method_in_orderProduct(self):
         prod = Product(id = 5, name = 'sillon', price = 8000)
@@ -154,14 +156,10 @@ class OrderingTestCase(TestCase):
         self.assertEqual(total, o.orderPrice, "Price should be equal")
 
     def test_crear_producto_string_no_vacio(self):
-        data = {
-            'name': '',
-            'price': 10
-        }
+        prod = Product(id=1, name='l', price=10)
+        db.session.add(prod)
+        db.session.commit()
 
-        resp = self.client.post('/product', data=json.dumps(data), content_type='application/json')
-
-        self.assert200(resp, "Falló el POST")
         p = Product.query.all()[0]
 
         self.assertFalse(p.name=="", "El nombre no debe estar vacío")
