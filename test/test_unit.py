@@ -75,8 +75,10 @@ class OrderingTestCase(TestCase):
         db.session.commit()
 
         result_GET = self.client.get('/order/1/product/5', content_type='aplication/json')
+        data = json.loads(result_GET.data)
 
         self.assertEqual(result_GET.status, "200 OK", "Falló el GET")
+        self.assertEqual(data['id'], prod.id, "Falló el GET")
 
     def test_GET_method_in_order(self):
         order = Order(id = 2)
