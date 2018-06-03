@@ -152,6 +152,21 @@ class Ordering(unittest.TestCase):
         self.assertTrue(deleted==True, "No se eliminó el producto de la tabla")
         self.assertFalse(order_product, "No se eliminó el producto de la db")
 
+    def test_nombre_producto(self):
+        ord = Order(id=1)
+        db.session.add(ord)
+        prod = Product(id=9, name='Pintura', price=300)
+        db.session.add(prod)
+        orpr = OrderProduct(order_id=1, product_id=9, product=prod, quantity=3)
+        db.session.add(orpr)
+        db.session.commit()
+
+        driver = self.driver
+        driver.get(self.baseURL)
+
+        name = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[2]').text
+        self.assertTrue(prod.name==name, "No se muestra correctamente el nombre del producto en la tabla")
+
     def tearDown(self):
         self.driver.get('http://localhost:5000/shutdown')
 
