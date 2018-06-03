@@ -156,13 +156,33 @@ class OrderingTestCase(TestCase):
         self.assertEqual(total, o.orderPrice, "Price should be equal")
 
     def test_crear_producto_string_no_vacio(self):
-        prod = Product(id=1, name='l', price=10)
+        prod = Product(id=1, name='', price=10)
         db.session.add(prod)
         db.session.commit()
 
         p = Product.query.all()[0]
 
         self.assertFalse(p.name=="", "El nombre no debe estar vacío")
+
+    def test_GET_product(self):
+        p = Product(id=7, name="Pincel", price=30)
+        db.session.add(p)
+        db.session.commit()
+
+        result_GET = self.client.get('/product', content_type='application/json')
+        data = json.loads(result_GET.data)[0]
+
+        self.assertEqual(result_GET.status, "200 OK", "Falló el GET")
+        self.assertEqual(data['id'], p.id, "Falló el GET")
+
+    def test_neg_price(self):
+        p = Product(id=7, name="Pincel", price=-30)
+        db.session.add(p)
+        db.session.commit()
+
+        prod = Product.query.all()[0]
+
+        self.assertFalse(prod.price<0, "Falló, se debe borrar el producto, tiene precio negativo")
 
 
 if __name__ == '__main__':
