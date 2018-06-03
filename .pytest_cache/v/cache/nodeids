@@ -1,0 +1,6 @@
+[
+  "test/test_unit.py::OrderingTestCase::test_GET_product",
+  "test/test_unit.py::OrderingTestCase::test_crear_producto",
+  "test/test_unit.py::OrderingTestCase::test_iniciar_sin_productos",
+  "test/test_unit.py::OrderingTestCase::test_neg_price"
+]
