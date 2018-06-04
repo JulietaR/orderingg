@@ -1,6 +1,19 @@
 [
+  "test/test_e2e.py::Ordering::test_eliminar_fila_correcta",
+  "test/test_e2e.py::Ordering::test_existe_notificacion",
+  "test/test_e2e.py::Ordering::test_modal",
+  "test/test_e2e.py::Ordering::test_nombre_producto",
+  "test/test_e2e.py::Ordering::test_productos_cantidad_negativa",
+  "test/test_e2e.py::Ordering::test_title",
+  "test/test_unit.py::OrderingTestCase::test_DELETE_method_in_orderProduct",
+  "test/test_unit.py::OrderingTestCase::test_GET_method_in_order",
+  "test/test_unit.py::OrderingTestCase::test_GET_method_in_orderProduct",
   "test/test_unit.py::OrderingTestCase::test_GET_product",
   "test/test_unit.py::OrderingTestCase::test_crear_producto",
+  "test/test_unit.py::OrderingTestCase::test_crear_producto_cantidad_no_negativa",
+  "test/test_unit.py::OrderingTestCase::test_crear_producto_string_no_vacio",
   "test/test_unit.py::OrderingTestCase::test_iniciar_sin_productos",
-  "test/test_unit.py::OrderingTestCase::test_neg_price"
+  "test/test_unit.py::OrderingTestCase::test_modificar_producto",
+  "test/test_unit.py::OrderingTestCase::test_neg_price",
+  "test/test_unit.py::OrderingTestCase::test_totalPrice"
 ]

@@ -1,1 +1,5 @@
-{}
+{
+  "test/test_unit.py::OrderingTestCase::test_crear_producto_cantidad_no_negativa": true,
+  "test/test_unit.py::OrderingTestCase::test_crear_producto_string_no_vacio": true,
+  "test/test_unit.py::OrderingTestCase::test_neg_price": true
+}

@@ -176,7 +176,7 @@ class OrderingTestCase(TestCase):
         self.assertEqual(data['id'], p.id, "Falló el GET")
 
     def test_neg_price(self):
-        p = Product(id=7, name="Pincel", price=-30)
+        p = Product(id=7, name="Pincel", price=-40)
         db.session.add(p)
         db.session.commit()
 
