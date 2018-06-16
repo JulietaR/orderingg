@@ -75,7 +75,7 @@ def addProductToOrder(pk):
     if (product_exists):
         return jsonify({
             'error': '<product {}> exists in <order {}>. Use PUT method'
-                .format(product['id'], pk)
+            .format(product['id'], pk)
         }), 400
 
     orderProduct = OrderProduct(quantity=product_data['quantity'])
@@ -88,7 +88,6 @@ def addProductToOrder(pk):
     return jsonify(order.serialize), 201
 
 @rest.route("/order/<pk_order>/product/<pk_product>", methods=['GET', 'PUT', 'DELETE'])
-
 def order_product_detail(pk_order, pk_product):
     """
     Obtiene un producto de una orden y modifica un producto de una orden

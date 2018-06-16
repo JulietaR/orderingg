@@ -11,7 +11,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class OrderingTestCase(TestCase):
     def create_app(self):
-        config_name = 'testing'
         app = create_app()
         app.config.update(
             SQLALCHEMY_DATABASE_URI='sqlite:///' + os.path.join(basedir, 'test.db'),
