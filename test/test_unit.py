@@ -13,7 +13,8 @@ class OrderingTestCase(TestCase):
     def create_app(self):
         app = create_app()
         app.config.update(
-            SQLALCHEMY_DATABASE_URI='sqlite:///' + os.path.join(basedir, 'test.db'),
+            SQLALCHEMY_DATABASE_URI='sqlite:///' + 
+                os.path.join(basedir, 'test.db'),
             SQLALCHEMY_TRACK_MODIFICATIONS=False,
             TESTING=True
         )
@@ -37,6 +38,7 @@ class OrderingTestCase(TestCase):
         assert len(data) == 0, "La base de datos tiene productos"
 
     def test_crear_producto(self):
+        """Test para feature crear producto."""
         data = {
             'name': 'Tenedor',
             'price': 50
@@ -54,7 +56,7 @@ class OrderingTestCase(TestCase):
     def test_crear_producto_cantidad_no_negativa(self):
         prod = Product(id = 5, name = 'sillon', price = 8000)
         order = Order(id = 1)
-        op = OrderProduct(order_id = 1, product_id = 5, product = prod, quantity = -2)    
+        op = OrderProduct(order_id = 1, product_id = 5, product = prod, quantity = -2)
 
         db.session.add(prod)
         db.session.add(order)
@@ -75,10 +77,10 @@ class OrderingTestCase(TestCase):
         db.session.add(op)
         db.session.commit()
 
-        result_GET = self.client.get('/order/1/product/5', content_type='aplication/json')
-        data = json.loads(result_GET.data)
+        result_get = self.client.get('/order/1/product/5', content_type='aplication/json')
+        data = json.loads(result_get.data)
 
-        self.assertEqual(result_GET.status, "200 OK", "Falló el GET")
+        self.assertEqual(result_get.status, "200 OK", "Falló el GET")
         self.assertEqual(data['id'], prod.id, "Falló el GET")
 
     def test_GET_method_in_order(self):

@@ -12,7 +12,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-from werkzeug.serving import make_server
+#from werkzeug.serving import make_server
 
 class Ordering(unittest.TestCase):
     # Creamos la base de datos de test
@@ -105,8 +105,8 @@ class Ordering(unittest.TestCase):
         driver = self.driver
         driver.get(self.baseURL)
 
-        editButton1 = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[6]/button[1]')
-        editButton1.click()
+        editbutton1 = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[6]/button[1]')
+        editbutton1.click()
         
         nameInput = driver.find_element_by_id("product-name")
         priceInput = driver.find_element_by_id("product-price")
@@ -120,9 +120,9 @@ class Ordering(unittest.TestCase):
         price = priceInput.get_attribute('value')
         quantity = quantityInput.get_attribute('value')
 
-        self.assertFalse(name=="", "Product name should not be empty")
-        self.assertFalse(price=="", "Product price should not be empty")
-        self.assertFalse(quantity=="", "Product quantity should not be empty")
+        self.assertFalse(name == "", "Product name should not be empty")
+        self.assertFalse(price == "", "Product price should not be empty")
+        self.assertFalse(quantity == "", "Product quantity should not be empty")
 
     def test_eliminar_fila_correcta(self):
         o = Order(id=1)
