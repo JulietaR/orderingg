@@ -52,7 +52,7 @@ const Select = (function () {
         const id = parseInt($option.value);
 
         return this.data.filter(function (product) {
-            return product.id == id;
+            return product.id === id;
         })[0];
     }
 

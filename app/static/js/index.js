@@ -88,15 +88,15 @@
                     console.error(r.error);
                     document.getElementById("noti").style.display = 'block';
                 } 
-                        else {
-                            document.getElementById("noti").style.display = 'none';
-                            API.getOrder().then(function (data) {
-                                refs.table.update(data);
-                            });
+                else {
+                    document.getElementById("noti").style.display = 'none';
+                    API.getOrder().then(function (data) {
+                        refs.table.update(data);
+                    });
 
-                        refs.modal.close();
-                    }
-                 });
+                refs.modal.close();
+                }
+            });
     }
 
     function onEditProduct(pid) {
