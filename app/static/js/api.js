@@ -61,10 +61,10 @@ const API = (function () {
 
         return fetch(`/order/${ orderId }/product`,
             {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: data
             }

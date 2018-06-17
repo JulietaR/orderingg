@@ -7,9 +7,9 @@
         selectedProduct: null,
         quantity: 0,
         order: API.getOrder()
-    }
+    };
 
-    const refs = {}
+    const refs = {};
 
     /**
      * Actualiza el valor del precio total
@@ -43,7 +43,7 @@
 
     function onEditProduct() {
         API.editProduct(1, state.selectedProduct.id, state.quantity)
-            .then(function (r) {
+            .then(function () {
                 API.getOrder().then(function (data) {
                     refs.table.update(data);
                 });
@@ -99,27 +99,20 @@
             });
     }
 
-    function onEditProduct(pid) {
+    /*function onEditProduct(pid) {
         let name = document.querySelector('#product-name').value
         let price = document.querySelector('#product-price').value
         let quantity = document.querySelector('#product-quantity').value
 
         API.editProduct(1, pid, quantity, { id: pid, name: name, price: price })
             .then(function (r) {
-                /*if (r.error) {
-                    //console.error(r.error);
-                } else {
-                    API.getOrder().then(function (data) {
-                        refs.table.update(data);
-                    });
-                }*/
                 if (!r.error) {
                     API.getOrder().then(function (data) {
                         refs.table.update(data);
                     });
                 }
             });
-    }
+    }*/
 
     /**
      * Inicializa la aplicacion
@@ -150,7 +143,7 @@
         API.deleteProduct(1, product.id, product)
             .then(function (r) {
                 if (r.error) {
-                    console.error(r.error);
+                    //console.error(r.error);
                 } else {
                     API.getOrder().then(function (data) {
                         refs.table.update(data);

@@ -72,7 +72,7 @@
         "max-len": ["warn", {"code": 120, "tabWidth": 4}],
         "linebreak-style": [
             "error",
-            "unix"
+            "windows"
         ],
         "quotes": [
             "error",
