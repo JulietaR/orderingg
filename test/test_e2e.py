@@ -92,7 +92,7 @@ class Ordering(unittest.TestCase):
         send = driver.find_element_by_id("save-button").click()
         noti = driver.find_element_by_class_name('help').is_displayed()
         self.assertTrue(noti, "No aparece la notificación")
-        
+
     def test_modal(self):
         o = Order(id=1)
         db.session.add(o)
@@ -149,7 +149,7 @@ class Ordering(unittest.TestCase):
 
         order_product = db.session.query(OrderProduct).all()
 
-        self.assertTrue(deleted==True, "No se eliminó el producto de la tabla")
+        self.assertTrue(deleted == True, "No se eliminó el producto de la tabla")
         self.assertFalse(order_product, "No se eliminó el producto de la db")
 
     def test_nombre_producto(self):
@@ -165,7 +165,7 @@ class Ordering(unittest.TestCase):
         driver.get(self.baseURL)
 
         name = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[2]').text
-        self.assertTrue(prod.name==name, "No se muestra correctamente el nombre del producto en la tabla")
+        self.assertTrue(prod.name == name, "No se muestra correctamente el nombre del producto en la tabla")
 
     def tearDown(self):
         self.driver.get('http://localhost:5000/shutdown')

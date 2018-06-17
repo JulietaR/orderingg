@@ -132,7 +132,7 @@ class OrderingTestCase(TestCase):
         db.session.commit()
 
         self.client.put('order/' + str(pk_order) + '/product/' + str(pk_product), data=json.dumps(data), content_type='application/json')
-        
+
         ordprod = pk_order, pk_product
         p = OrderProduct.query.get(ordprod)
         self.assertEqual(p.quantity, data['quantity'], 'Quantity should be equal')

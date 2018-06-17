@@ -42,9 +42,7 @@ class Order(db.Model):
 
     @hybrid_property
     def orderPrice(self):
-        """
-        Computa el precio total de la orden
-        """
+        """Computa el precio total de la orden"""
         return sum([
             product.price * product.quantity for product in self.products
         ])
