@@ -85,7 +85,7 @@
         API.deleteProduct(1, productId)
             .then(function (r) {
                 if (r.error) {
-                    console.error(r.error);
+                    //console.error(r.error);
                     document.getElementById("noti").style.display = 'block';
                 } 
                 else {
@@ -94,7 +94,7 @@
                         refs.table.update(data);
                     });
 
-                refs.modal.close();
+                    refs.modal.close();
                 }
             });
     }
@@ -106,9 +106,14 @@
 
         API.editProduct(1, pid, quantity, { id: pid, name: name, price: price })
             .then(function (r) {
-                if (r.error) {
-                    console.error(r.error);
+                /*if (r.error) {
+                    //console.error(r.error);
                 } else {
+                    API.getOrder().then(function (data) {
+                        refs.table.update(data);
+                    });
+                }*/
+                if (!r.error) {
                     API.getOrder().then(function (data) {
                         refs.table.update(data);
                     });

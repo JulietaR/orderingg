@@ -107,12 +107,12 @@ const Modal = (function () {
             $edit,
             $save,
             $editTitle: $modal.querySelector('#edit-title'),
-            $saveTitle: $modal.querySelector('#save-title'),
+            $saveTitle: $modal.querySelector('#save-title')
         };
 
-        modal.close = close.bind(modal),
-        modal.open = open.bind(modal)
-        modal.openEdit = openEdit.bind(modal)
+        modal.close = close.bind(modal);
+        modal.open = open.bind(modal);
+        modal.openEdit = openEdit.bind(modal);
 
         toggleButtons();
         return modal;
@@ -122,7 +122,7 @@ const Modal = (function () {
      * Abre el modal en modo agregar
      **/
     function open() {
-        this.$edit.classList.add('is-hidden');
+        this.$edit.classList.add("is-hidden");
         this.$editTitle.classList.add('is-hidden');
 
         this.$save.classList.remove('is-hidden');
