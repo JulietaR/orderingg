@@ -29,14 +29,17 @@ def products():
         p = Product.query.all()
         return jsonify([i.serialize for i in p])
 
-@rest.route("/order", methods=['GET'])
+@rest.route("/order", methods=['GET', 'PUT'])
 def orders():
     """
     Obtiene todas las ordenes
     """
-
-    orders = Order.query.all()
-    return jsonify([order.serialize for order in orders])
+    if request.method == 'GET':
+        orders = Order.query.all()
+        return jsonify([order.serialize for order in orders])
+    else:
+        # Código para método PUT
+        print("/order PUT")
 
 @rest.route("/order/<pk>", methods=['GET'])
 def order(pk):

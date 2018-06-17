@@ -1,0 +1,15 @@
+a)¿Cómo cambiaría el porcentaje de coverage si en la función orders() de routes.py, definieramos un método (POST, PUT o DELETE) y un IF que distinga entre dicho método y el GET, de manera similar a lo que se hace en el método products()?
+
+
+
+b)¿Cómo cambiaría el porcentaje de coverage si en models.py, definieramos un método en la clase Order que retorne la cantidad de productos que tenga la orden?
+
+Baja el porcentaje de models.py pero no el total.
+
+c)¿Cómo cambiaría el porcentaje de coverage si eliminaramos el método totalPrice() de la clase OrderProduct?
+
+Baja el porcentaje del archivo routes.py, no cambia el porcentaje por arhivo models.py, el test total price fallaría y esto modificaría el porcentaje total de cobertura de tests. 
+
+d)¿Cómo cambiaría el porcentaje de coverage si eliminaramos un test?
+
+Dependiendo del test puede bajar el porcentaje o mantenerse igual en el caso de testearse los métodos GET, DELETE, POST, etc.
