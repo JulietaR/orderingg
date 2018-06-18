@@ -1,15 +1,26 @@
 a)¿Cómo cambiaría el porcentaje de coverage si en la función orders() de routes.py, definieramos un método (POST, PUT o DELETE) y un IF que distinga entre dicho método y el GET, de manera similar a lo que se hace en el método products()?
 
+Baja el porcentaje debido a que se está agregando sentencias en un endpoint que no se testea (por lo tanto esas líneas no se ejecutan)
 
 
 b)¿Cómo cambiaría el porcentaje de coverage si en models.py, definieramos un método en la clase Order que retorne la cantidad de productos que tenga la orden?
 
-Baja el porcentaje de models.py pero no el total.
+Baja el porcentaje debido a que se agrega un método para el cual no existe un test que lo cubra
+
 
 c)¿Cómo cambiaría el porcentaje de coverage si eliminaramos el método totalPrice() de la clase OrderProduct?
 
-Baja el porcentaje del archivo routes.py, no cambia el porcentaje por arhivo models.py, el test total price fallaría y esto modificaría el porcentaje total de cobertura de tests. 
+Baja el porcentaje de models.py porque se están quitando un método que está cubierto por varios tests, y baja el porcentaje de routes.py debido a que en el endpoint /order/<pk_order>/product/<pk_product>
+al ejecutar la sentencia order_product_json = order_product.serialize de la línea 108, da error ya que OrderProduct ahora no tiene la propiedad totalPrice y no se ejecutan las sentencias del mismo método siguientes a dicha línea.
+Además fallan los tests:
+test_DELETE_method_in_orderProduct
+test_GET_method_in_orderProduct
+test_modificar_producto
+
+debido a que OrderProduct no tiene la propiedad totalPrice
+(AttributeError: 'OrderProduct' object has no attribute 'totalPrice')
+
 
 d)¿Cómo cambiaría el porcentaje de coverage si eliminaramos un test?
 
-Dependiendo del test puede bajar el porcentaje o mantenerse igual en el caso de testearse los métodos GET, DELETE, POST, etc.
+Dependiendo del test puede bajar el porcentaje o mantenerse igual en el caso de que otro test cubra la ejecución de las mismas sentencias que el test que se eliminó
