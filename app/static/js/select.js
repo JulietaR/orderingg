@@ -1,5 +1,5 @@
 const Select = (function () {
-    const source = document.getElementById('select-template').innerHTML;
+    const source = document.getElementById("select-template").innerHTML;
     const template = Handlebars.compile(source);
 
     /*
@@ -37,7 +37,7 @@ const Select = (function () {
                 select.render({
                     data,
                     onSelect: config.onSelect
-                })
+                });
             });
         } else {
             select.render(config);
@@ -57,11 +57,11 @@ const Select = (function () {
     }
 
     function enable() {
-        this.$select.removeAttribute('disabled')
+        this.$select.removeAttribute("disabled");
     }
 
     function disable() {
-        this.$select.setAttribute('disabled', true);
+        this.$select.setAttribute("disabled", true);
     }
 
     function clearSelect() {
@@ -93,26 +93,26 @@ const Select = (function () {
     function render(config) {
         this.$el.innerHTML = template({ products: config.data });
 
-        this.$select = this.$el.querySelector('select');
+        this.$select = this.$el.querySelector("select");
         this.data = config.data;
-        this.$select.addEventListener('change', onChange.bind(this));
+        this.$select.addEventListener("change", onChange.bind(this));
     }
 
     function showErrorMsg(msg) {
         this.isValid = false;
-        const $help = this.$el.querySelector('.help');
+        const $help = this.$el.querySelector(".help");
         $help.innerHTML = msg;
-        $help.classList.remove('is-hidden');
-        this.$el.querySelector('.select').classList.add('is-danger');
+        $help.classList.remove("is-hidden");
+        this.$el.querySelector(".select").classList.add("is-danger");
     }
 
     function hideErrorMsg() {
-        const $help = this.$el.querySelector('.help');
-        $help.classList.add('is-hidden');
-        this.$el.querySelector('.select').classList.remove('is-danger');
+        const $help = this.$el.querySelector(".help");
+        $help.classList.add("is-hidden");
+        this.$el.querySelector(".select").classList.remove("is-danger");
     }
 
     return {
         init
     };
-})()
+})();
