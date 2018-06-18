@@ -12,7 +12,8 @@ from selenium.common.exceptions import NoSuchElementException
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-#from werkzeug.serving import make_server
+# from werkzeug.serving import make_server
+
 
 class Ordering(unittest.TestCase):
     # Creamos la base de datos de test
@@ -51,15 +52,15 @@ class Ordering(unittest.TestCase):
     def test_productos_cantidad_negativa(self):
         o = Order(id=1)
         db.session.add(o)
-        p = Product(id=1, name = 'Silla', price = 500)
+        p = Product(id=1, name='Silla', price=500)
         db.session.add(p)
         db.session.commit()
 
         driver = self.driver
         driver.get(self.baseURL)
-        
+
         driver.find_element_by_xpath("/html/body/main/div[1]/div/button").click()
-        
+
         cantidad = driver.find_element_by_id("quantity")
         cantidad.clear()
         cantidad.send_keys('-1')
@@ -71,9 +72,9 @@ class Ordering(unittest.TestCase):
         self.assertEqual(send, False, "Se puede ingresar productos negativos a la orden")
 
     def test_existe_notificacion(self):
-        prod = Product(id = 1, name = 'Silla', price = 500)
-        order = Order(id = 1)
-        op = OrderProduct(order_id = 1, product_id= 1, product = prod, quantity = 1)
+        prod = Product(id=1, name='Silla', price=500)
+        order = Order(id=1)
+        op = OrderProduct(order_id=1, product_id=1, product=prod, quantity=1)
 
         db.session.add(prod)
         db.session.add(order)
@@ -102,10 +103,10 @@ class Ordering(unittest.TestCase):
         db.session.add(op)
         db.session.commit()
 
-        driver = self.driver
+        driver =self.driver
         driver.get(self.baseURL)
 
-        editbutton1 = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[6]/button[1]')
+        editbutton1 =driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[6]/button[1]')
         editbutton1.click()
         
         nameInput = driver.find_element_by_id("product-name")
@@ -177,4 +178,3 @@ class Ordering(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
