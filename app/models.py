@@ -50,6 +50,13 @@ class Order(db.Model):
         ])
 
     @property
+    def cantProductos(self):
+        cp = 0
+        for p in self.products:
+            cp += 1
+        return cp
+
+    @property
     def serialize(self):
         """
         Transforma el objeto en un formato serializable
