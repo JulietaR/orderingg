@@ -2,7 +2,7 @@ __pycache_/
 *.py[cod]
 *$py.class
 .pytest_cache/
-.vscode/
+.vscode/*
 
 app.db
 test.db
