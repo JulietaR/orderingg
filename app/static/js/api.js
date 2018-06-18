@@ -4,7 +4,7 @@ const API = (function () {
      *
      * @param {Number} orderId id de la orden
      */
-    function getOrder(orderId) {
+    function getOrder() {
         return fetch("/order/1")
             .then(function toJson(r) {
                 return r.json();
@@ -16,7 +16,7 @@ const API = (function () {
      *
      */
     function getProducts() {
-        return fetch('/product')
+        return fetch("/product")
             .then(function toJson(r) {
                 return r.json();
             });
@@ -41,10 +41,10 @@ const API = (function () {
         const data = JSON.stringify({ quantity: quantity, product: product });
         return fetch(`/order/${ orderId }/product/${ productId }`,
             {
-                method: 'PUT',
+                method: "PUT",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: data
             }
@@ -57,7 +57,7 @@ const API = (function () {
      * Agrega un producto a una orden
      **/
     function addProduct(orderId, product, quantity) {
-        const data = JSON.stringify({ quantity: quantity, product: product })
+        const data = JSON.stringify({ quantity: quantity, product: product });
 
         return fetch(`/order/${ orderId }/product`,
             {
@@ -74,14 +74,14 @@ const API = (function () {
     }
 
     function deleteProduct(orderId, productId, product) {
-        const data = JSON.stringify({ product: product })
+        const data = JSON.stringify({ product: product });
 
         return fetch(`/order/${ orderId }/product/${ productId }`,
             {
-                method: 'DELETE',
+                method: "DELETE",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: data
             }
@@ -97,5 +97,5 @@ const API = (function () {
         editProduct,
         deleteProduct,
         addProduct
-    }
-})()
+    };
+})();

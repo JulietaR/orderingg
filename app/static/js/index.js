@@ -1,5 +1,5 @@
 (function () {
-    const $totalPrice = document.querySelector('#total-price');
+    const $totalPrice = document.querySelector("#total-price");
 
     // Estado de la aplicacion
     const state = {
@@ -17,9 +17,9 @@
     function updateTotalPrice() {
         try {
             const totalPrice = state.selectedProduct.price * state.quantity;
-            $totalPrice.innerHTML = `Precio total: $ ${totalPrice}`
+            $totalPrice.innerHTML = `Precio total: $ ${totalPrice}`;
         } catch (e) {
-            $totalPrice.innerHTML = '';
+            $totalPrice.innerHTML = "";
         }
     }
 
@@ -86,10 +86,10 @@
             .then(function (r) {
                 if (r.error) {
                     //console.error(r.error);
-                    document.getElementById("noti").style.display = 'block';
+                    document.getElementById("noti").style.display = "block";
                 } 
                 else {
-                    document.getElementById("noti").style.display = 'none';
+                    document.getElementById("noti").style.display = "none";
                     API.getOrder().then(function (data) {
                         refs.table.update(data);
                     });
@@ -99,10 +99,10 @@
             });
     }
 
-    /*function onEditProduct(pid) {
-        let name = document.querySelector('#product-name').value
-        let price = document.querySelector('#product-price').value
-        let quantity = document.querySelector('#product-quantity').value
+    function onEditProduct(pid) {
+        let name = document.querySelector("#product-name").value;
+        let price = document.querySelector("#product-price").value;
+        let quantity = document.querySelector("#product-quantity").value;
 
         API.editProduct(1, pid, quantity, { id: pid, name: name, price: price })
             .then(function (r) {
@@ -112,14 +112,14 @@
                     });
                 }
             });
-    }*/
+    }
 
     /**
      * Inicializa la aplicacion
      **/
     function init() {
         refs.modal = Modal.init({
-            el: '#modal',
+            el: "#modal",
             products: state.products,
             onProductSelect: onProductSelect,
             onChangeQunatity: onChangeQunatity,
@@ -129,13 +129,13 @@
 
         // Inicializamos la tabla
         refs.table = Table.init({
-            el: '#orders',
+            el: "#orders",
             data: state.order
         });
 
         refs.global = {
             onDeleteProduct
-        }
+        };
     }
 
     refs.onDeleteProduct = function(product) {
@@ -150,9 +150,9 @@
                     });
                 }
             });
-    }
+    };
 
     init();
     window.refs = refs;
-})()
+})();
 
