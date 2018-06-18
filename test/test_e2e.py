@@ -12,7 +12,8 @@ from selenium.common.exceptions import NoSuchElementException
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-from werkzeug.serving import make_server
+# from werkzeug.serving import make_server
+
 
 class Ordering(unittest.TestCase):
     # Creamos la base de datos de test
@@ -51,15 +52,15 @@ class Ordering(unittest.TestCase):
     def test_productos_cantidad_negativa(self):
         o = Order(id=1)
         db.session.add(o)
-        p = Product(id=1, name = 'Silla', price = 500)
+        p = Product(id=1, name='Silla', price=500)
         db.session.add(p)
         db.session.commit()
 
         driver = self.driver
         driver.get(self.baseURL)
-        
+
         driver.find_element_by_xpath("/html/body/main/div[1]/div/button").click()
-        
+
         cantidad = driver.find_element_by_id("quantity")
         cantidad.clear()
         cantidad.send_keys('-1')
@@ -71,9 +72,9 @@ class Ordering(unittest.TestCase):
         self.assertEqual(send, False, "Se puede ingresar productos negativos a la orden")
 
     def test_existe_notificacion(self):
-        prod = Product(id = 1, name = 'Silla', price = 500)
-        order = Order(id = 1)
-        op = OrderProduct(order_id = 1, product_id= 1, product = prod, quantity = 1)
+        prod = Product(id=1, name='Silla', price=500)
+        order = Order(id=1)
+        op = OrderProduct(order_id=1, product_id=1, product=prod, quantity=1)
 
         db.session.add(prod)
         db.session.add(order)
@@ -92,7 +93,7 @@ class Ordering(unittest.TestCase):
         send = driver.find_element_by_id("save-button").click()
         noti = driver.find_element_by_class_name('help').is_displayed()
         self.assertTrue(noti, "No aparece la notificación")
-        
+
     def test_modal(self):
         o = Order(id=1)
         db.session.add(o)
@@ -102,11 +103,11 @@ class Ordering(unittest.TestCase):
         db.session.add(op)
         db.session.commit()
 
-        driver = self.driver
+        driver =self.driver
         driver.get(self.baseURL)
 
-        editButton1 = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[6]/button[1]')
-        editButton1.click()
+        editbutton1 =driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[6]/button[1]')
+        editbutton1.click()
         
         nameInput = driver.find_element_by_id("product-name")
         priceInput = driver.find_element_by_id("product-price")
@@ -120,9 +121,9 @@ class Ordering(unittest.TestCase):
         price = priceInput.get_attribute('value')
         quantity = quantityInput.get_attribute('value')
 
-        self.assertFalse(name=="", "Product name should not be empty")
-        self.assertFalse(price=="", "Product price should not be empty")
-        self.assertFalse(quantity=="", "Product quantity should not be empty")
+        self.assertFalse(name == "", "Product name should not be empty")
+        self.assertFalse(price == "", "Product price should not be empty")
+        self.assertFalse(quantity == "", "Product quantity should not be empty")
 
     def test_eliminar_fila_correcta(self):
         o = Order(id=1)
@@ -149,7 +150,7 @@ class Ordering(unittest.TestCase):
 
         order_product = db.session.query(OrderProduct).all()
 
-        self.assertTrue(deleted==True, "No se eliminó el producto de la tabla")
+        self.assertTrue(deleted == True, "No se eliminó el producto de la tabla")
         self.assertFalse(order_product, "No se eliminó el producto de la db")
 
     def test_nombre_producto(self):
@@ -165,7 +166,7 @@ class Ordering(unittest.TestCase):
         driver.get(self.baseURL)
 
         name = driver.find_element_by_xpath('/html/body/main/div[2]/div/table/tbody/tr[1]/td[2]').text
-        self.assertTrue(prod.name==name, "No se muestra correctamente el nombre del producto en la tabla")
+        self.assertTrue(prod.name == name, "No se muestra correctamente el nombre del producto en la tabla")
 
     def tearDown(self):
         self.driver.get('http://localhost:5000/shutdown')
@@ -177,4 +178,3 @@ class Ordering(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
